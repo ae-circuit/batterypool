@@ -1,0 +1,36 @@
+/*
+Task: Write a pseudo code for a battery swapping station.
+    I have assumed the existence of various functions and methods for specific tasks such as decoding QR codes, 
+    reading RFID cards, accepting MQTT gateways, validating batteries, requesting payment, 
+    issuing charged batteries, and displaying messages.
+
+*/
+
+function main():
+    loop:
+        display("Scan QR code, RFID card, or send MQTT request through App")
+        input = getUserInput()
+        
+        if input is QR code:
+            batteryID = decodeQRCode(input)
+        else if input is RFID card:
+            batteryID = readRFIDCard(input)
+        else if input is MQTT request:
+            batteryID = parseMQTTRequest(input)
+        else:
+            display("Input Failure. Please try again.")
+            continue
+        
+        if isValidBattery(batteryID):
+            display("Battery is valid. Submitting...")
+            paymentConfirmation = requestPaymentStatus()
+            
+            if paymentConfirmation:
+                display("Waiting for payment Confirmation...")
+                chargedBattery = issueChargedBattery(batteryID)
+                display("Battery swapped successfully. Please collect your charged battery.")
+                display("Thank you for using our service!")
+            else:
+                display("Payment Error. Please try again or contact support.")
+        else:
+            display("Invalid battery. Please try again.")
